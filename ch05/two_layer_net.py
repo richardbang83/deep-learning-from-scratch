@@ -18,6 +18,7 @@ class TwoLayerNet:
         self.params['b2'] = np.zeros(output_size)
 
         # 계층 생성
+        # Affine 계층 : 일반 cnn 의 hidden layer를 구성한다 X*W+B 
         self.layers = OrderedDict()
         self.layers['Affine1'] = Affine(self.params['W1'], self.params['b1'])
         self.layers['Relu1'] = Relu()
@@ -34,6 +35,7 @@ class TwoLayerNet:
     # x : 입력 데이터, t : 정답 레이블
     def loss(self, x, t):
         y = self.predict(x)
+        # SoftmaxwithLoss 를 계산함 (y - t)
         return self.lastLayer.forward(y, t)
     
     def accuracy(self, x, t):
@@ -57,7 +59,8 @@ class TwoLayerNet:
         return grads
         
     def gradient(self, x, t):
-        # forward
+        # forward 
+        # lastLayer의 loss을 계산함.
         self.loss(x, t)
 
         # backward
